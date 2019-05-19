@@ -1,0 +1,921 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Data Mining">
+      
+      
+        <link rel="canonical" href="https://bayu.github.io/170441100036dmi/getting-started/">
+      
+      
+        <meta name="author" content="Muhammad Bayu Safar P">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.2.0">
+    
+    
+      
+        <title>K-Mean Clustering - Data mining</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.750b69bd.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#3f51b5">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "None", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#k-mean-clustering" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://bayu.github.io/170441100036dmi/" title="Data mining" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Data mining
+            </span>
+            <span class="md-header-nav__topic">
+              K-Mean Clustering
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/bayu/170441100036dmi" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    bayu/170441100036dmi
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+<nav class="md-tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." title="Identitas" class="md-tabs__link md-tabs__link--active">
+        Identitas
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://bayu.github.io/170441100036dmi/" title="Data mining" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Data mining
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/bayu/170441100036dmi" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    bayu/170441100036dmi
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Identitas" class="md-nav__link">
+      Identitas
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        K-Mean Clustering
+      </label>
+    
+    <a href="./" title="K-Mean Clustering" class="md-nav__link md-nav__link--active">
+      K-Mean Clustering
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#penjelasan" title="Penjelasan" class="md-nav__link">
+    Penjelasan
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#algoritma-k-means" title="Algoritma K-Means" class="md-nav__link">
+    Algoritma K-Means
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kelebihan-dan-kekurangan" title="Kelebihan Dan Kekurangan" class="md-nav__link">
+    Kelebihan Dan Kekurangan
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contoh-studi-kasus-k-mean-clustering" title="Contoh studi kasus k-mean clustering" class="md-nav__link">
+    Contoh studi kasus k-mean clustering
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#menerapkan-k-means-clustering-pada-jumlah-penduduk-berdasarkan-agama-2018-s2" title="Menerapkan K-Means Clustering Pada jumlah-penduduk-berdasarkan-agama-2018-s2" class="md-nav__link">
+    Menerapkan K-Means Clustering Pada jumlah-penduduk-berdasarkan-agama-2018-s2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-1-import-libraries" title="Langkah 1: Import Libraries" class="md-nav__link">
+    Langkah 1: Import Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-2-menginput-data" title="Langkah 2: Menginput Data" class="md-nav__link">
+    Langkah 2: Menginput Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-3-mengambil-dua-fitur-colom-pada-data-tersebut-untuk-dijadikan-variable" title="Langkah 3: Mengambil dua fitur colom pada data tersebut untuk dijadikan variable" class="md-nav__link">
+    Langkah 3: Mengambil dua fitur colom pada data tersebut untuk dijadikan variable
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-4-mencari-centroid-secara-acak-menggunakan-import-random-dan-menampilkan-hasil-pencarian" title="Langkah 4: Mencari centroid secara acak menggunakan import random dan menampilkan hasil pencarian" class="md-nav__link">
+    Langkah 4: Mencari centroid secara acak menggunakan import random dan menampilkan hasil pencarian
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-5-menghitung-distance-dari-hasil-pencarian-centroid-secara-acak-dengan-cara-mendeklarasikan-list-lalu-hasil-dari-rumus-dimasukkan-ke-list-tersebut" title="Langkah 5: Menghitung distance dari hasil pencarian centroid secara acak dengan cara mendeklarasikan list lalu hasil dari rumus dimasukkan ke list tersebut" class="md-nav__link">
+    Langkah 5: Menghitung distance dari hasil pencarian centroid secara acak dengan cara mendeklarasikan list lalu hasil dari rumus dimasukkan ke list tersebut
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-6-menghitung-rata-rata-tiap-kolom-sebagai-pusat-cluster-yang-baru-dengan-rumus" title="Langkah 6: Menghitung rata-rata tiap kolom sebagai pusat cluster yang baru dengan rumus" class="md-nav__link">
+    Langkah 6: Menghitung rata-rata tiap kolom sebagai pusat cluster yang baru dengan rumus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-7-menghitung-distance-dari-pusat-cluster-yang-baru-lalu-dimasukkan-ke-list" title="Langkah 7: Menghitung distance dari pusat cluster yang baru lalu dimasukkan ke list" class="md-nav__link">
+    Langkah 7: Menghitung distance dari pusat cluster yang baru lalu dimasukkan ke list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-8-menampilkan-secara-visualisasi-menggunakan-matplotlib" title="Langkah 8: Menampilkan secara visualisasi menggunakan matplotlib" class="md-nav__link">
+    Langkah 8: Menampilkan secara visualisasi menggunakan matplotlib
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-9-menampilkan-hasil-k-mean-clustering" title="Langkah 9: Menampilkan hasil k-mean clustering" class="md-nav__link">
+    Langkah 9: Menampilkan hasil k-mean clustering
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output" title="OUTPUT" class="md-nav__link">
+    OUTPUT
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#referensi" title="REFERENSI" class="md-nav__link">
+    REFERENSI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../specimen/" title="KNN" class="md-nav__link">
+      KNN
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../license/" title="Decision Tree" class="md-nav__link">
+      Decision Tree
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#penjelasan" title="Penjelasan" class="md-nav__link">
+    Penjelasan
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#algoritma-k-means" title="Algoritma K-Means" class="md-nav__link">
+    Algoritma K-Means
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kelebihan-dan-kekurangan" title="Kelebihan Dan Kekurangan" class="md-nav__link">
+    Kelebihan Dan Kekurangan
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contoh-studi-kasus-k-mean-clustering" title="Contoh studi kasus k-mean clustering" class="md-nav__link">
+    Contoh studi kasus k-mean clustering
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#menerapkan-k-means-clustering-pada-jumlah-penduduk-berdasarkan-agama-2018-s2" title="Menerapkan K-Means Clustering Pada jumlah-penduduk-berdasarkan-agama-2018-s2" class="md-nav__link">
+    Menerapkan K-Means Clustering Pada jumlah-penduduk-berdasarkan-agama-2018-s2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-1-import-libraries" title="Langkah 1: Import Libraries" class="md-nav__link">
+    Langkah 1: Import Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-2-menginput-data" title="Langkah 2: Menginput Data" class="md-nav__link">
+    Langkah 2: Menginput Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-3-mengambil-dua-fitur-colom-pada-data-tersebut-untuk-dijadikan-variable" title="Langkah 3: Mengambil dua fitur colom pada data tersebut untuk dijadikan variable" class="md-nav__link">
+    Langkah 3: Mengambil dua fitur colom pada data tersebut untuk dijadikan variable
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-4-mencari-centroid-secara-acak-menggunakan-import-random-dan-menampilkan-hasil-pencarian" title="Langkah 4: Mencari centroid secara acak menggunakan import random dan menampilkan hasil pencarian" class="md-nav__link">
+    Langkah 4: Mencari centroid secara acak menggunakan import random dan menampilkan hasil pencarian
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-5-menghitung-distance-dari-hasil-pencarian-centroid-secara-acak-dengan-cara-mendeklarasikan-list-lalu-hasil-dari-rumus-dimasukkan-ke-list-tersebut" title="Langkah 5: Menghitung distance dari hasil pencarian centroid secara acak dengan cara mendeklarasikan list lalu hasil dari rumus dimasukkan ke list tersebut" class="md-nav__link">
+    Langkah 5: Menghitung distance dari hasil pencarian centroid secara acak dengan cara mendeklarasikan list lalu hasil dari rumus dimasukkan ke list tersebut
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-6-menghitung-rata-rata-tiap-kolom-sebagai-pusat-cluster-yang-baru-dengan-rumus" title="Langkah 6: Menghitung rata-rata tiap kolom sebagai pusat cluster yang baru dengan rumus" class="md-nav__link">
+    Langkah 6: Menghitung rata-rata tiap kolom sebagai pusat cluster yang baru dengan rumus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-7-menghitung-distance-dari-pusat-cluster-yang-baru-lalu-dimasukkan-ke-list" title="Langkah 7: Menghitung distance dari pusat cluster yang baru lalu dimasukkan ke list" class="md-nav__link">
+    Langkah 7: Menghitung distance dari pusat cluster yang baru lalu dimasukkan ke list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-8-menampilkan-secara-visualisasi-menggunakan-matplotlib" title="Langkah 8: Menampilkan secara visualisasi menggunakan matplotlib" class="md-nav__link">
+    Langkah 8: Menampilkan secara visualisasi menggunakan matplotlib
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-9-menampilkan-hasil-k-mean-clustering" title="Langkah 9: Menampilkan hasil k-mean clustering" class="md-nav__link">
+    Langkah 9: Menampilkan hasil k-mean clustering
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output" title="OUTPUT" class="md-nav__link">
+    OUTPUT
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#referensi" title="REFERENSI" class="md-nav__link">
+    REFERENSI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="k-mean-clustering">K-Mean Clustering<a class="headerlink" href="#k-mean-clustering" title="Permanent link">&para;</a></h1>
+<h3 id="penjelasan">Penjelasan<a class="headerlink" href="#penjelasan" title="Permanent link">&para;</a></h3>
+<p>​       K-means merupakan salah satu algoritma <em>clustering</em>. Tujuan algoritma ini yaitu untuk membagi data menjadi beberapa kelompok. Algoritma ini menerima masukan berupa data tanpa label kelas. Hal ini berbeda dengan <em>supervised learning</em> yang menerima masukan berupa vektor (­<em>x­1 , y1</em>) , (­<em>x­2 , y2</em>) , …, (­<em>x­i , yi</em>), di mana <em>xi</em> merupakan data dari suatu data pelatihan dan <em>yi</em> merupakan label kelas untuk <em>xi</em>.</p>
+<p>​       Pada algoritma pembelajaran ini, komputer mengelompokkan sendiri data-data yang menjadi masukannya tanpa mengetahui terlebih dulu target kelasnya. Pembelajaran ini termasuk dalam <em>unsupervised learning.</em> Masukan yang diterima adalah data atau objek dan <em>k</em> buah kelompok (<em>cluster</em>) yang diinginkan.  Algoritma ini akan mengelompokkan data atau objek ke dalam <em>k</em> buah kelompok tersebut. Pada setiap <em>cluster</em> terdapat titik pusat (<em>centroid</em>) yang merepresentasikan <em>cluster</em> tersebut.</p>
+<p>​       K-means ditemukan oleh beberapa orang yaitu Lloyd (1957, 1982), Forgey (1965) , Friedman and Rubin (1967) , and McQueen (1967). Ide dari <em>clustering</em> pertama kali ditemukan oleh Lloyd pada tahun 1957, namun hal tersebut baru dipublikasi pada tahun 1982. Pada tahun 1965, Forgey juga mempublikasi teknik yang sama sehingga terkadang dikenal sebagai Lloyd-Forgy pada beberapa sumber.</p>
+<h3 id="algoritma-k-means">Algoritma K-Means<a class="headerlink" href="#algoritma-k-means" title="Permanent link">&para;</a></h3>
+<p>​       Secara sederhana algoritma K-Means dimulai dari tahap berikut :</p>
+<ol>
+<li>Pilih K buah titik centroid.</li>
+<li>Menghitung jarak data dengan centroid.</li>
+<li>Update nilai titik centroid.</li>
+<li>Ulangi langkah 2 dan 3 sampai nilai dari titik centroid tidak lagi berubah.</li>
+</ol>
+<p>Kita coba gambarkan dalam sebuah flowchart, agar kita lebih mudah memahami algoritma K-Means. Berikut adalah gambaran flowchartnya :</p>
+<p><img alt="" src="../assets/images/Drawing1.png" /></p>
+<p>​       Jadi dari flowchart diatas, kita memiliki input dan 3 buah proses. Yaitu pertama adalah proses menghitung centroid, kemudian proses kedua menghitung data yang akan dikelompokkan dengan centroid, kemudian proses ketiga adalah mengelompokkan data berdasarkan jarak terdekat (minimum distance). Dan kita membuat perulangan dengan kondisi "apakah posisi centroid tetap dan tidak ada perubahan terhadap datanya ?" apabila ya maka kita selesai melakukan pengelompokan. Tapi apabila masih ada perubahan centroid maka kita update kembali nilai centroid melalui proses pertama.</p>
+<h3 id="kelebihan-dan-kekurangan">Kelebihan Dan Kekurangan<a class="headerlink" href="#kelebihan-dan-kekurangan" title="Permanent link">&para;</a></h3>
+<p>Ada beberapa kelebihan pada algoritma k-means, yaitu:</p>
+<ol>
+<li>Mudah untuk diimplementasikan dan dijalankan.</li>
+<li>Waktu yang dibutuhkan untuk menjalankan pembelajaran ini relatif cepat.</li>
+<li>Mudah untuk diadaptasi.</li>
+<li>Umum digunakan.</li>
+</ol>
+<p>Algoritma k-means memiliki beberapa kelebihan, namun ada kekurangannya juga. Kekurangan dari algoritma tersebut yaitu :</p>
+<ol>
+<li>Sebelum algoritma dijalankan, k buah titik diinisialisasi secara <em>random</em> sehingga pengelompokkan data yang dihasilkan dapat berbeda-beda. Jika nilai <em>random</em> untuk inisialisasi kurang baik, maka pengelompokkan yang dihasilkan pun menjadi kurang optimal.</li>
+<li>Dapat terjebak dalam masalah yang disebut <em>curse of dimensionality.</em> Hal ini dapat terjadi jika data pelatihan memiliki dimensi yang sangat tinggi (Contoh jika data pelatihan terdiri dari 2 atribut maka dimensinya adalah 2 dimensi. Namun jika ada 20 atribut, maka akan ada 20 dimensi). Salah satu cara kerja algoritma ini adalah mencari jarak terdekat antara <em>k</em> buah titik dengan titik lainnya. Jika mencari jarak antar titik pada 2 dimensi, masih mudah dilakukan. Namun bagaimana mencari jarak antar titik jika terdapat 20 dimensi. Hal ini akan menjadi sulit.</li>
+<li>Jika hanya terdapat beberapa titik sampel data, maka cukup mudah untuk menghitung dan mencari titik terdekat dengan <em>k</em> titik yang diinisialisasi secara <em>random.</em> Namun jika terdapat banyak sekali titik data (misalnya satu milyar buah data), maka perhitungan dan pencarian titik terdekat akan membutuhkan waktu yang lama. Proses tersebut dapat dipercepat, namun dibutuhkan struktur data yang lebih rumit seperti <em>kD-Tree</em> atau <em>hashing.</em></li>
+</ol>
+<h3 id="contoh-studi-kasus-k-mean-clustering">Contoh studi kasus k-mean clustering<a class="headerlink" href="#contoh-studi-kasus-k-mean-clustering" title="Permanent link">&para;</a></h3>
+<h5 id="menerapkan-k-means-clustering-pada-jumlah-penduduk-berdasarkan-agama-2018-s2">Menerapkan K-Means Clustering Pada jumlah-penduduk-berdasarkan-agama-2018-s2<a class="headerlink" href="#menerapkan-k-means-clustering-pada-jumlah-penduduk-berdasarkan-agama-2018-s2" title="Permanent link">&para;</a></h5>
+<h5 id="langkah-1-import-libraries">Langkah 1: Import Libraries<a class="headerlink" href="#langkah-1-import-libraries" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python">import csv
+import math
+import random
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+akar = math.sqrt</code></pre>
+
+<p>Cara instal library pandas dan matplotlib.pyplot yaitu dengan cara membuka cmd administrator lalu ketik</p>
+<pre class="codehilite"><code>pip install pandas
+pip install matplotlib</code></pre>
+
+<h5 id="langkah-2-menginput-data">Langkah 2: Menginput Data<a class="headerlink" href="#langkah-2-menginput-data" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python">def program():
+    dataset = pd.read_csv("jumlah-penduduk-berdasarkan-agama-2018-s2.csv")</code></pre>
+
+<h5 id="langkah-3-mengambil-dua-fitur-colom-pada-data-tersebut-untuk-dijadikan-variable">Langkah 3: Mengambil dua fitur colom pada data tersebut untuk dijadikan variable<a class="headerlink" href="#langkah-3-mengambil-dua-fitur-colom-pada-data-tersebut-untuk-dijadikan-variable" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> # mengambil kolom 2 dan 3
+    colum_islam = dataset.iloc[:, 2].values
+    colum_kristen = dataset.iloc[:, 3].values</code></pre>
+
+<h5 id="langkah-4-mencari-centroid-secara-acak-menggunakan-import-random-dan-menampilkan-hasil-pencarian">Langkah 4: Mencari centroid secara acak menggunakan import random dan menampilkan hasil pencarian<a class="headerlink" href="#langkah-4-mencari-centroid-secara-acak-menggunakan-import-random-dan-menampilkan-hasil-pencarian" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> def mencari_centroid_dst():
+        # mengambil letak centroid pertama acak
+        random1 = []
+        for i in range(151):
+            random1.append(i)
+        hasil_random1 = random.choice(random1)
+
+        # hasil centroid pertama acak
+        cen_pertama1 = colum_islam[hasil_random1]
+        cen_pertama2 = colum_kristen[hasil_random1]
+
+        # mengambil letak centroid kedua acak
+        random2 = []
+        for j in range(151):
+            random2.append(j)
+        hasil_random2 = random.choice(random2)
+
+        # hasil centroid kedua acak
+        cen_kedua1 = colum_islam[hasil_random2]
+        cen_kedua2 = colum_kristen[hasil_random2]</code></pre>
+
+<h5 id="langkah-5-menghitung-distance-dari-hasil-pencarian-centroid-secara-acak-dengan-cara-mendeklarasikan-list-lalu-hasil-dari-rumus-dimasukkan-ke-list-tersebut">Langkah 5: Menghitung distance dari hasil pencarian centroid secara acak dengan cara mendeklarasikan list lalu hasil dari rumus dimasukkan ke list tersebut<a class="headerlink" href="#langkah-5-menghitung-distance-dari-hasil-pencarian-centroid-secara-acak-dengan-cara-mendeklarasikan-list-lalu-hasil-dari-rumus-dimasukkan-ke-list-tersebut" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> if (cen_pertama1==cen_kedua1 and cen_pertama2==cen_kedua2):
+            mencari_centroid_dst()
+        else:
+
+            # menghitung distance ke centroid 1 dan centroid 2
+            hasil_hitung_pertama1 = []
+            hasil_hitung_pertama2 = []
+            hasil1 = []
+            hasil2 = []
+            anggota1_kiri = []
+            anggota1_kanan = []
+            anggota2_kanan = []
+            anggota2_kiri = []
+            jml_awal1 = []
+            jml_awal2 = []
+
+            for a in range(len(colum_islam)):
+                for b in range(len(colum_kristen)):
+                    if (a==b):
+                        jarak1 = akar(((cen_pertama1 - colum_islam[a])**2) + ((cen_pertama2 - colum_kristen[a])**2))
+                        jarak2 = akar(((cen_kedua1 - colum_islam[a])**2) + ((cen_kedua2 - colum_kristen[a])**2))
+                        if(jarak1 &lt; jarak2):
+                            hasil1.append(jarak1)
+                            anggota1_kiri.append(colum_islam[a])
+                            anggota1_kanan.append(colum_kristen[a])
+                            hasil_hitung_pertama1.append(jarak1)
+                            jml_awal1.append(jarak1)
+                            hasil_hitung_pertama2.append(jarak2)
+                        else:
+                            hasil2.append(jarak2)
+                            anggota2_kanan.append(colum_kristen[a])
+                            anggota2_kiri.append(colum_islam[a])
+                            hasil_hitung_pertama2.append(jarak2)
+                            jml_awal2.append(jarak2)
+                            hasil_hitung_pertama1.append(jarak1)</code></pre>
+
+<h5 id="langkah-6-menghitung-rata-rata-tiap-kolom-sebagai-pusat-cluster-yang-baru-dengan-rumus">Langkah 6: Menghitung rata-rata tiap kolom sebagai pusat cluster yang baru dengan rumus<a class="headerlink" href="#langkah-6-menghitung-rata-rata-tiap-kolom-sebagai-pusat-cluster-yang-baru-dengan-rumus" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> # menghitung rata-rata tiap kolom sebagai pusat cluster yang baru
+ hasil1_baru = []
+            hasil2_baru = []
+            anggota_clus1 = []
+            anggota_clus2 = []
+            seluruh_kiri = []
+            seluruh_kanan = []
+            anggota1_kiribaru = []
+            anggota1_kananbaru = []
+            anggota2_kiribaru = []
+            anggota2_kananbaru = []
+
+            rata1_a = sum(anggota1_kiri) / len(anggota1_kiri)
+            rata1_b = sum(anggota1_kanan) / len(anggota1_kanan)
+            rata2_a = sum(anggota2_kiri) / len(anggota2_kiri)
+            rata2_b = sum(anggota2_kanan) / len(anggota2_kanan)</code></pre>
+
+<h5 id="langkah-7-menghitung-distance-dari-pusat-cluster-yang-baru-lalu-dimasukkan-ke-list">Langkah 7: Menghitung distance dari pusat cluster yang baru lalu dimasukkan ke list<a class="headerlink" href="#langkah-7-menghitung-distance-dari-pusat-cluster-yang-baru-lalu-dimasukkan-ke-list" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> for j in range(len(colum_islam)):
+                for k in range(len(colum_kristen)):
+                    if(j==k):
+                        dist1 = akar(((rata1_a - colum_islam[j])**2) + ((rata1_b - colum_kristen[j])**2))
+                        dist2 = akar(((rata2_a - colum_islam[j])**2) + ((rata2_b - colum_kristen[j])**2))
+                        if (dist1&lt;dist2):
+                            hasil1_baru.append(dist1)
+                            seluruh_kiri.append(dist1)
+                            seluruh_kanan.append(dist2)
+                            anggota_clus1.append(colum_islam[j])
+                            anggota1_kiribaru.append(colum_islam[j])
+                            anggota1_kananbaru.append(colum_kristen[j])
+                        else:
+                            hasil2_baru.append(dist2)
+                            seluruh_kanan.append(dist2)
+                            seluruh_kiri.append(dist1)
+                            anggota_clus2.append(colum_islam[j])
+                            anggota2_kiribaru.append(colum_islam[j])
+                            anggota2_kananbaru.append(colum_kristen[j])</code></pre>
+
+<h5 id="langkah-8-menampilkan-secara-visualisasi-menggunakan-matplotlib">Langkah 8: Menampilkan secara visualisasi menggunakan matplotlib<a class="headerlink" href="#langkah-8-menampilkan-secara-visualisasi-menggunakan-matplotlib" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> if (len(hasil1)==len(hasil1_baru) and len(hasil2)==len(hasil2_baru)):
+                plt.scatter(seluruh_kiri,seluruh_kanan,c='yellow')
+                plt.show()</code></pre>
+
+<h5 id="langkah-9-menampilkan-hasil-k-mean-clustering">Langkah 9: Menampilkan hasil k-mean clustering<a class="headerlink" href="#langkah-9-menampilkan-hasil-k-mean-clustering" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> print ("Centroid pertama = ",cen_pertama1,"dan",cen_pertama2)
+                print ("Centroid kedua = ",cen_kedua1,"dan",cen_kedua2)
+                print ("----------------------------------------------------------------------------------------------------------------------------------------------")                
+                print ("Data cluster pertama adalah :",anggota1_kiri,anggota1_kanan)
+                print ("----------------------------------------------------------------------------------------------------------------------------------------------")
+                print ("Data cluster kedua adalah :",anggota2_kiri,anggota2_kanan)
+            else:
+                program()
+
+    mencari_centroid_dst()
+
+program()
+</code></pre>
+
+<h2 id="output">OUTPUT<a class="headerlink" href="#output" title="Permanent link">&para;</a></h2>
+<p><img alt="" src="../assets/images/Capture.JPG" /></p>
+<p><img alt="" src="../assets/images/Capture2.JPG" /></p>
+<h5 id="referensi">REFERENSI<a class="headerlink" href="#referensi" title="Permanent link">&para;</a></h5>
+<p><a href="https://id.wikipedia.org/wiki/K-means">https://id.wikipedia.org/wiki/K-means</a></p>
+<p><a href="https://www.ketutrare.com/2018/11/algoritma-k-means-clustering-dan-contoh.html">https://www.ketutrare.com/2018/11/algoritma-k-means-clustering-dan-contoh.html</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href=".." title="Identitas" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Identitas
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../specimen/" title="KNN" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                KNN
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy;2019 Muhammad Bayu Safar P
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/squidfunk" class="md-footer-social__link fa fa-github-alt"></a>
+    
+      <a href="https://instagram.com/_by.pratama" class="md-footer-social__link fa fa-instagram"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.8c0d971c.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>

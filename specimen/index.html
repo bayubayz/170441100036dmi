@@ -1,0 +1,820 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Data Mining">
+      
+      
+        <link rel="canonical" href="https://bayu.github.io/170441100036dmi/specimen/">
+      
+      
+        <meta name="author" content="Muhammad Bayu Safar P">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.2.0">
+    
+    
+      
+        <title>KNN - Data mining</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.750b69bd.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#3f51b5">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "None", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#k-nearest-neighbor" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://bayu.github.io/170441100036dmi/" title="Data mining" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Data mining
+            </span>
+            <span class="md-header-nav__topic">
+              KNN
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/bayu/170441100036dmi" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    bayu/170441100036dmi
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+<nav class="md-tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." title="Identitas" class="md-tabs__link md-tabs__link--active">
+        Identitas
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://bayu.github.io/170441100036dmi/" title="Data mining" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Data mining
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/bayu/170441100036dmi" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    bayu/170441100036dmi
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Identitas" class="md-nav__link">
+      Identitas
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../getting-started/" title="K-Mean Clustering" class="md-nav__link">
+      K-Mean Clustering
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        KNN
+      </label>
+    
+    <a href="./" title="KNN" class="md-nav__link md-nav__link--active">
+      KNN
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#penjelasan" title="Penjelasan" class="md-nav__link">
+    Penjelasan
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kelebihan-dan-kekurangan" title="Kelebihan Dan Kekurangan" class="md-nav__link">
+    Kelebihan Dan Kekurangan
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kelebihan" title="Kelebihan" class="md-nav__link">
+    Kelebihan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kelemahan" title="Kelemahan" class="md-nav__link">
+    Kelemahan
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#study-kasus" title="Study kasus" class="md-nav__link">
+    Study kasus
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#study-kasus-knn-pada-data-amazoncsv" title="Study kasus KNN pada data amazon.csv" class="md-nav__link">
+    Study kasus KNN pada data amazon.csv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-1-import-libraries" title="Langkah 1: Import Libraries" class="md-nav__link">
+    Langkah 1: Import Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-2-menginput-data" title="Langkah 2: Menginput Data" class="md-nav__link">
+    Langkah 2: Menginput Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-3-mengambil-semua-data-untuk-percobaan" title="Langkah 3: Mengambil semua data untuk percobaan" class="md-nav__link">
+    Langkah 3: Mengambil semua data untuk percobaan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-4-mengambil-tiga-colom" title="Langkah 4: Mengambil tiga colom" class="md-nav__link">
+    Langkah 4: Mengambil tiga colom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-5-input-jumlah-k-atau-jumlah-tetangga-terdekat" title="Langkah 5: Input jumlah K atau jumlah tetangga terdekat" class="md-nav__link">
+    Langkah 5: Input jumlah K atau jumlah tetangga terdekat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-6-mencari-knn-dengan-menggunakan-sklearn-neighbors-clssifier" title="Langkah 6: Mencari knn dengan menggunakan sklearn neighbors clssifier" class="md-nav__link">
+    Langkah 6: Mencari knn dengan menggunakan sklearn neighbors clssifier
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-8-menampilkan-data-asli-dan-prediksinya" title="Langkah 8: Menampilkan Data Asli dan Prediksinya" class="md-nav__link">
+    Langkah 8: Menampilkan Data Asli dan Prediksinya
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output" title="OUTPUT" class="md-nav__link">
+    OUTPUT
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#referensi" title="REFERENSI" class="md-nav__link">
+    REFERENSI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../license/" title="Decision Tree" class="md-nav__link">
+      Decision Tree
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#penjelasan" title="Penjelasan" class="md-nav__link">
+    Penjelasan
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kelebihan-dan-kekurangan" title="Kelebihan Dan Kekurangan" class="md-nav__link">
+    Kelebihan Dan Kekurangan
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kelebihan" title="Kelebihan" class="md-nav__link">
+    Kelebihan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kelemahan" title="Kelemahan" class="md-nav__link">
+    Kelemahan
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#study-kasus" title="Study kasus" class="md-nav__link">
+    Study kasus
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#study-kasus-knn-pada-data-amazoncsv" title="Study kasus KNN pada data amazon.csv" class="md-nav__link">
+    Study kasus KNN pada data amazon.csv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-1-import-libraries" title="Langkah 1: Import Libraries" class="md-nav__link">
+    Langkah 1: Import Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-2-menginput-data" title="Langkah 2: Menginput Data" class="md-nav__link">
+    Langkah 2: Menginput Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-3-mengambil-semua-data-untuk-percobaan" title="Langkah 3: Mengambil semua data untuk percobaan" class="md-nav__link">
+    Langkah 3: Mengambil semua data untuk percobaan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-4-mengambil-tiga-colom" title="Langkah 4: Mengambil tiga colom" class="md-nav__link">
+    Langkah 4: Mengambil tiga colom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-5-input-jumlah-k-atau-jumlah-tetangga-terdekat" title="Langkah 5: Input jumlah K atau jumlah tetangga terdekat" class="md-nav__link">
+    Langkah 5: Input jumlah K atau jumlah tetangga terdekat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-6-mencari-knn-dengan-menggunakan-sklearn-neighbors-clssifier" title="Langkah 6: Mencari knn dengan menggunakan sklearn neighbors clssifier" class="md-nav__link">
+    Langkah 6: Mencari knn dengan menggunakan sklearn neighbors clssifier
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#langkah-8-menampilkan-data-asli-dan-prediksinya" title="Langkah 8: Menampilkan Data Asli dan Prediksinya" class="md-nav__link">
+    Langkah 8: Menampilkan Data Asli dan Prediksinya
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output" title="OUTPUT" class="md-nav__link">
+    OUTPUT
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#referensi" title="REFERENSI" class="md-nav__link">
+    REFERENSI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="k-nearest-neighbor">K-Nearest Neighbor<a class="headerlink" href="#k-nearest-neighbor" title="Permanent link">&para;</a></h1>
+<h3 id="penjelasan">Penjelasan<a class="headerlink" href="#penjelasan" title="Permanent link">&para;</a></h3>
+<p>​       Algoritme <em>k-nearest neighbor</em> (k-NN atau KNN) adalah sebuah metode untuk melakukan klasifikasi terhadap objek berdasarkan data pembelajaran yang jaraknya paling dekat dengan objek tersebut.</p>
+<p>​       Data pembelajaran diproyeksikan ke ruang berdimensi banyak, dimana masing-masing dimensi merepresentasikan fitur dari data. Ruang ini dibagi menjadi bagian-bagian berdasarkan klasifikasi data pembelajaran. Sebuah titik pada ruang ini ditandai kelas <em>c</em> jika kelas <em>c</em> merupakan klasifikasi yang paling banyak ditemui pada <em>k</em> buah tetangga terdekat titik tersebut. Dekat atau jauhnya tetangga biasanya dihitung berdasarkan jarak Euclidean.</p>
+<p>​       Pada fase pembelajaran, algoritme ini hanya melakukan penyimpanan vektor-vektor fitur dan klasifikasi dari data pembelajaran. Pada fase klasifikasi, fitur-fitur yang sama dihitung untuk data test (yang klasifikasinya tidak diketahui). Jarak dari vektor yang baru ini terhadap seluruh vektor data pembelajaran dihitung, dan sejumlah <em>k</em> buah yang paling dekat diambil. Titik yang baru klasifikasinya diprediksikan termasuk pada klasifikasi terbanyak dari titik-titik tersebut.</p>
+<p>​       Nilai <em>k</em> yang terbaik untuk algoritme ini tergantung pada data; secara umumnya, nilai <em>k</em> yang tinggi akan mengurangi efek <em>noise</em> pada klasifikasi, tetapi membuat batasan antara setiap klasifikasi menjadi lebih kabur. Nilai <em>k</em> yang bagus dapat dipilih dengan optimasi parameter, misalnya dengan menggunakan cross-validation. Kasus khusus di mana klasifikasi diprediksikan berdasarkan data pembelajaran yang paling dekat (dengan kata lain, <em>k</em> = 1) disebut algoritme <em>nearest neighbor</em>.</p>
+<p>​       Ketepatan algoritme k-NN ini sangat dipengaruhi oleh ada atau tidaknya fitur-fitur yang tidak relevan, atau jika bobot fitur tersebut tidak setara dengan relevansinya terhadap klasifikasi. Riset terhadap algoritme ini sebagian besar membahas bagaimana memilih dan memberi bobot terhadap fitur, agar performa klasifikasi menjadi lebih baik.</p>
+<p>Terdapat beberapa jenis algoritme pencarian tetangga terdekat, diantaranya:</p>
+<ul>
+<li>Linear scan</li>
+<li>Pohon kd</li>
+<li>Pohon Balltree</li>
+<li>Pohon metrik</li>
+<li>Locally-sensitive hashing (LSH)</li>
+</ul>
+<h3 id="kelebihan-dan-kekurangan">Kelebihan Dan Kekurangan<a class="headerlink" href="#kelebihan-dan-kekurangan" title="Permanent link">&para;</a></h3>
+<h6 id="kelebihan">Kelebihan<a class="headerlink" href="#kelebihan" title="Permanent link">&para;</a></h6>
+<p>KNN memiliki beberapa kelebihan yaitu bahwa dia tangguh terhadap training data yang noisy dan efektif apabila data latih nya besar. </p>
+<h6 id="kelemahan">Kelemahan<a class="headerlink" href="#kelemahan" title="Permanent link">&para;</a></h6>
+<p>Sedangkan kelemahan dari KNN adalah : </p>
+<ol>
+<li>KNN perlu menentukan nilai dari parameter K (jumlah dari tetangga terdekat).</li>
+<li>Pembelajaran berdasarkan jarak tidak jelas mengenai jenis jarak apa yang harus digunakan dan atribut mana yang harus digunakan untuk mendapatkan hasil yang terbaik.</li>
+<li>Biaya komputasi cukup tinggi karena diperlukan perhitungan jarak dari tiap sample uji pada keseluruhan sample latih.</li>
+</ol>
+<h3 id="study-kasus">Study kasus<a class="headerlink" href="#study-kasus" title="Permanent link">&para;</a></h3>
+<h5 id="study-kasus-knn-pada-data-amazoncsv">Study kasus KNN pada data amazon.csv<a class="headerlink" href="#study-kasus-knn-pada-data-amazoncsv" title="Permanent link">&para;</a></h5>
+<p>Implementasi studi kasus:</p>
+<h5 id="langkah-1-import-libraries">Langkah 1: Import Libraries<a class="headerlink" href="#langkah-1-import-libraries" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python">### Import librari terlebih dahulu
+import pandas as pd
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split</code></pre>
+
+<h5 id="langkah-2-menginput-data">Langkah 2: Menginput Data<a class="headerlink" href="#langkah-2-menginput-data" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python">### Memanggil file csv dengan librari pandas
+data_orj = pd.read_csv("amazon.csv.csv")
+</code></pre>
+
+<h5 id="langkah-3-mengambil-semua-data-untuk-percobaan">Langkah 3: Mengambil semua data untuk percobaan<a class="headerlink" href="#langkah-3-mengambil-semua-data-untuk-percobaan" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python">### Mengambil semua data untuk percobaan
+data = data_orj.loc [:,'tgl':'class']
+</code></pre>
+
+<h5 id="langkah-4-mengambil-tiga-colom">Langkah 4: Mengambil tiga colom<a class="headerlink" href="#langkah-4-mengambil-tiga-colom" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python">### Mengambil 3 kolom
+data_knn = data[['heigth','class','width']]
+</code></pre>
+
+<h5 id="langkah-5-input-jumlah-k-atau-jumlah-tetangga-terdekat">Langkah 5: Input jumlah K atau jumlah tetangga terdekat<a class="headerlink" href="#langkah-5-input-jumlah-k-atau-jumlah-tetangga-terdekat" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python">### Input jumlah K atau jumlah tetangga terdekat
+inK = int(input("Masukkan K : "))</code></pre>
+
+<h5 id="langkah-6-mencari-knn-dengan-menggunakan-sklearn-neighbors-clssifier">Langkah 6: Mencari knn dengan menggunakan sklearn neighbors clssifier<a class="headerlink" href="#langkah-6-mencari-knn-dengan-menggunakan-sklearn-neighbors-clssifier" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python">### Mencari knn dengan menggunakan sklearn neighbors clssifier
+knn = KNeighborsClassifier(n_neighbors = inK)  
+x,y = data_knn.loc[:,data_knn.columns != 'class'], data_knn.loc[:,'class']
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size = 0.3, random_state = 42)
+knn.fit(x_train,y_train)
+prediction = knn.predict(x_test)
+</code></pre>
+
+<p><strong>Langkah 7: Menampilkan akurasi data</strong></p>
+<pre class="codehilite"><code class="language-python">print('KNN dengan (K =',inK,') Akurasinya adalah: ', knn.score(x_test,y_test))
+print("")</code></pre>
+
+<h5 id="langkah-8-menampilkan-data-asli-dan-prediksinya">Langkah 8: Menampilkan Data Asli dan Prediksinya<a class="headerlink" href="#langkah-8-menampilkan-data-asli-dan-prediksinya" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python">datatest = pd.DataFrame(x_test)
+datatest["class"] = y_test
+datatest["prediksi"] = prediction
+print ("Data Asli dan Prediksinya")
+print (datatest)</code></pre>
+
+<h3 id="output">OUTPUT<a class="headerlink" href="#output" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../assets/images/Capture3.JPG" /></p>
+<p><img alt="" src="../assets/images/Capture4.JPG" /></p>
+<h4 id="referensi">REFERENSI<a class="headerlink" href="#referensi" title="Permanent link">&para;</a></h4>
+<p><a href="https://id.wikipedia.org/wiki/KNN">https://id.wikipedia.org/wiki/KNN</a></p>
+<p><a href="http://cgeduntuksemua.blogspot.com/2012/03/pengertian-kelebihan-dan-kekurangan-k.html">http://cgeduntuksemua.blogspot.com/2012/03/pengertian-kelebihan-dan-kekurangan-k.html</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../getting-started/" title="K-Mean Clustering" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                K-Mean Clustering
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../license/" title="Decision Tree" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Decision Tree
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy;2019 Muhammad Bayu Safar P
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/squidfunk" class="md-footer-social__link fa fa-github-alt"></a>
+    
+      <a href="https://instagram.com/_by.pratama" class="md-footer-social__link fa fa-instagram"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.8c0d971c.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>
